@@ -79,7 +79,7 @@ export const useTabbing = (
       // check if key is an Tab
       if (event.keyCode === 9) {
         const els = contentRef?.current?.querySelectorAll(
-          'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]'
+          'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"], iframe'
         );
 
         const focusableEls = Array.prototype.slice.call(els);
@@ -93,7 +93,10 @@ export const useTabbing = (
         if (event.shiftKey && document.activeElement === firstFocusableEl) {
           event.preventDefault();
           lastFocusableEl.focus();
-        } else if (document.activeElement === lastFocusableEl) {
+        } else if (
+          !event.shiftKey &&
+          document.activeElement === lastFocusableEl
+        ) {
           event.preventDefault();
           firstFocusableEl.focus();
         }
